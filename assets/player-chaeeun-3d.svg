@@ -1,0 +1,27 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="64" cy="115" rx="23" ry="9" fill="#5C6E91" fill-opacity="0.32"/>
+  <ellipse cx="64" cy="44" rx="23" ry="25" fill="url(#skin)"/>
+  <path d="M39 45C39 29 50 18 64 18C78 18 89 29 89 45V51H39V45Z" fill="url(#hair)"/>
+  <path d="M42 39C46 29 56 24 64 24C72 24 82 29 86 39C79 34 49 34 42 39Z" fill="#4D3D65"/>
+  <circle cx="55" cy="45" r="3.2" fill="#2A2528"/>
+  <circle cx="73" cy="45" r="3.2" fill="#2A2528"/>
+  <path d="M54 57C58 62 70 62 74 57" stroke="#7A5248" stroke-width="3" stroke-linecap="round"/>
+  <path d="M43 74L64 63L85 74V98C85 109 75 117 64 117C53 117 43 109 43 98V74Z" fill="url(#dress)"/>
+  <path d="M55 70H73L64 80L55 70Z" fill="#FFEAF3"/>
+  <rect x="37" y="77" width="8" height="25" rx="4" fill="#F7CBB3"/>
+  <rect x="83" y="77" width="8" height="25" rx="4" fill="#F7CBB3"/>
+  <defs>
+    <linearGradient id="skin" x1="64" y1="19" x2="64" y2="69" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE5CC"/>
+      <stop offset="1" stop-color="#F4C8A8"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="64" y1="18" x2="64" y2="51" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3A324A"/>
+      <stop offset="1" stop-color="#241F30"/>
+    </linearGradient>
+    <linearGradient id="dress" x1="64" y1="63" x2="64" y2="117" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF88B4"/>
+      <stop offset="1" stop-color="#EB5B96"/>
+    </linearGradient>
+  </defs>
+</svg>

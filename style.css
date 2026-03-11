@@ -1,0 +1,335 @@
+:root {
+  --overlay-dark: rgba(9, 10, 14, 0.56);
+  --panel-bg-1: rgba(11, 13, 22, 0.96);
+  --panel-bg-2: rgba(24, 20, 37, 0.96);
+  --panel-border: #ffd468;
+  --text-main: #f6f7fc;
+  --accent-1: #ff9673;
+  --accent-2: #ff6a5d;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  color: var(--text-main);
+}
+
+body {
+  background: radial-gradient(circle at 50% -20%, #95d8f6, #6d8db7 60%, #3a425d);
+  touch-action: none;
+}
+
+#game-root {
+  position: absolute;
+  inset: 0;
+}
+
+canvas {
+  display: block;
+}
+
+#hud-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#guide-badge {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: rgba(12, 16, 27, 0.58);
+  backdrop-filter: blur(6px);
+  color: #f8f9ff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 8px 14px;
+  white-space: nowrap;
+}
+
+#talk-btn {
+  position: absolute;
+  right: 16px;
+  bottom: calc(env(safe-area-inset-bottom) + 118px);
+  min-width: 130px;
+  height: 48px;
+  border: 0;
+  border-radius: 14px;
+  padding: 0 14px;
+  font-size: 0.98rem;
+  color: #fff;
+  background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
+  box-shadow: 0 10px 24px rgba(155, 46, 45, 0.38);
+  pointer-events: auto;
+  display: none;
+}
+
+#jump-btn {
+  position: absolute;
+  right: 16px;
+  bottom: calc(env(safe-area-inset-bottom) + 58px);
+  min-width: 98px;
+  height: 44px;
+  border: 0;
+  border-radius: 12px;
+  padding: 0 14px;
+  font-size: 0.92rem;
+  color: #fff;
+  background: linear-gradient(180deg, #79a8ff, #4e77da);
+  box-shadow: 0 8px 20px rgba(39, 63, 133, 0.34);
+  pointer-events: auto;
+}
+
+#joystick-base {
+  position: absolute;
+  left: 16px;
+  bottom: calc(env(safe-area-inset-bottom) + 18px);
+  width: 122px;
+  height: 122px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.52);
+  background: rgba(16, 21, 33, 0.38);
+  backdrop-filter: blur(4px);
+  pointer-events: auto;
+}
+
+#joystick-stick {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 50px;
+  height: 50px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 28%, #ffffff, #dce4f4 70%);
+  transform: translate(-50%, -50%);
+  transition: transform 90ms linear;
+}
+
+#dialogue-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 75%, rgba(55, 66, 102, 0.16), var(--overlay-dark));
+  pointer-events: auto;
+  z-index: 8;
+}
+
+#dialogue-overlay.hidden {
+  display: none;
+}
+
+#dialogue-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(45vh, 340px);
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 37% 63%;
+  gap: 12px;
+  background: linear-gradient(180deg, var(--panel-bg-1), var(--panel-bg-2));
+  border-top: 3px solid var(--panel-border);
+  box-shadow: 0 -22px 48px rgba(8, 10, 15, 0.58);
+  pointer-events: auto;
+  z-index: 9;
+}
+
+#dialogue-panel.hidden {
+  display: none;
+}
+
+.portrait-wrap {
+  border-radius: 14px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 22%, #fbe5f2, #d6bdd8 58%, #8f789d);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+#npc-portrait {
+  width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.dialogue-wrap {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#npc-nameplate {
+  background: #ffd86e;
+  color: #281f23;
+  border-radius: 10px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  padding: 6px 12px;
+}
+
+#npc-subtitle {
+  color: #d5defc;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+#dialogue-text {
+  margin: 0;
+  color: #fdf8d8;
+  font-size: clamp(1rem, 2.8vw, 1.2rem);
+  line-height: 1.62;
+  word-break: keep-all;
+  min-height: 4.8em;
+}
+
+.dialogue-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#next-line-btn {
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f7d474, #e6bc4d);
+  color: #372a13;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 8px 16px;
+}
+
+#ending-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  display: grid;
+  place-items: center;
+  background: rgba(8, 10, 14, 0.74);
+  padding: 18px;
+}
+
+#ending-panel.hidden {
+  display: none;
+}
+
+.ending-card {
+  width: min(780px, 100%);
+  border-radius: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  padding: 16px;
+  background: linear-gradient(180deg, #fff6ea, #e9d9c2);
+  color: #2d2624;
+  box-shadow: 0 16px 36px rgba(5, 6, 9, 0.44);
+}
+
+.ending-card h2 {
+  margin: 0 0 12px;
+  font-size: clamp(1.25rem, 4.6vw, 1.8rem);
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+.ending-visuals {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.ending-photo-box {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f3ead9;
+  border: 1px solid rgba(26, 17, 9, 0.2);
+  min-height: 220px;
+}
+
+.ending-photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cake-box img {
+  object-fit: contain;
+  background: #fbf8f1;
+}
+
+.single-cake {
+  width: min(440px, 100%);
+}
+
+#ending-text {
+  margin: 12px 0;
+  font-size: 1rem;
+  color: #3e3632;
+  text-align: center;
+}
+
+#ending-close-btn {
+  display: block;
+  margin: 0 auto;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #ff9f83, #ff7562);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 10px 18px;
+}
+
+@media (max-width: 430px) {
+  #guide-badge {
+    font-size: 0.78rem;
+    padding: 7px 10px;
+  }
+
+  #dialogue-panel {
+    height: min(48vh, 350px);
+    grid-template-columns: 40% 60%;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  #dialogue-text {
+    font-size: 0.96rem;
+  }
+
+  #talk-btn {
+    min-width: 114px;
+    font-size: 0.92rem;
+  }
+
+  #jump-btn {
+    min-width: 90px;
+    font-size: 0.86rem;
+  }
+
+  .ending-visuals {
+    display: block;
+  }
+}
