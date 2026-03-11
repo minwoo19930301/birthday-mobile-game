@@ -5,7 +5,7 @@
 ## Hosting
 
 - Platform: `Cloudflare Workers Static Assets`
-- Live URL: `https://soft-salad-7a8b.rlaalsdn456456.workers.dev`
+- Live URL: `https://soft-salad-7a8b.rlaalsdn456456.workers.dev/`
 - GitHub repo: `private`
 
 ## Local Run
